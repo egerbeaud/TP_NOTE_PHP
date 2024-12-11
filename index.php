@@ -1,7 +1,11 @@
 <?php
 ob_start();
 session_start();
+
 require_once(__DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Models' . DIRECTORY_SEPARATOR . 'connectDb.php');
+require_once(__DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Models' . DIRECTORY_SEPARATOR . 'signUpModels.php');
+require_once(__DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Models' . DIRECTORY_SEPARATOR . 'signInModels.php');
+
 require_once(__DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . 'header.php');
 require_once(__DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'signUpController.php');
 require_once(__DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'signInController.php');
@@ -23,7 +27,7 @@ if (!isset($_GET['c'])) {
 
         case 'saveUser':
             $signUpController = new SignUpController($pdo);
-            $signUpController->saveUser();
+            $signUpController->collectDataFormSignUp();
             break;
 
         case 'signInUser':

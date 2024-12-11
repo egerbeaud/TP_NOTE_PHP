@@ -1,34 +1,21 @@
 <?php
-
 class signUpController {
 
     private PDO $pdo;
+    private SignUpModels $signUpModels;
 
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
+        $this->signUpModels = new SignUpModels($pdo);
     }
 
-    public function saveUser(){
+    public function collectDataFormSignUp(){
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        $requete = $this->pdo->prepare("INSERT INTO users (nom, email, password, date_inscription) VALUES (:name, :email, :password, NOW())");
-        $requete->bindParam(':name', $name);
-        $requete->bindParam(':email', $email);
-        $requete->bindParam(':password', $hashedPassword);
-        $ok =  $requete->execute();
-
-        if($ok){
-            require_once(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Views' .DIRECTORY_SEPARATOR.'User'. DIRECTORY_SEPARATOR .'Message'.DIRECTORY_SEPARATOR.'saveUserSucces.php');
-        }
-        else {
-            echo ("Error to save user !!!");
-        }
-    }
+        $this->signUpModels->createUser($name, $email, $password);    }
 
     public function displaySignUpUserForm(){
         require_once(__DIR__. DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'User'.DIRECTORY_SEPARATOR.'signUpForm.php');

@@ -3,10 +3,12 @@
 class SignInController
 {
     private PDO $pdo;
+    private SignInModels $signInModels;
 
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
+        $this->signInModels = new SignInModels($pdo);
     }
 
     public function displaySignInUserForm()
@@ -18,10 +20,8 @@ class SignInController
     {
         $email = $_POST['email'];
         $password = $_POST['password'];
-        $requete = $this->pdo->prepare("SELECT * FROM tpnote.users WHERE email = :email");
-        $requete->bindParam(':email', $email);
-        $requete->execute();
-        $user = $requete->fetch(PDO::FETCH_ASSOC);
+       
+        $user = $this->signInModels->findUserInDB($email);
 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['email'] = $user['email'];
