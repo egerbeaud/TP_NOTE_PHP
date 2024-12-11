@@ -15,7 +15,13 @@ class signUpController {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $this->signUpModels->createUser($name, $email, $password);    }
+        $ok = $this->signUpModels->createUser($name, $email, $password);  
+        if ($ok){
+            header("Location: ?c=signInUser");    
+        }else {
+            echo "Error to sign Up";
+        }
+    }
 
     public function displaySignUpUserForm(){
         require_once(__DIR__. DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'User'.DIRECTORY_SEPARATOR.'signUpForm.php');

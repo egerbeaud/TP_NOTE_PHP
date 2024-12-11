@@ -21,12 +21,7 @@ class SignUpModels {
         $requete->bindParam(':password', $hashedPassword);
         $ok =  $requete->execute();
 
-        if($ok){
-            require_once(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Views' .DIRECTORY_SEPARATOR.'User'. DIRECTORY_SEPARATOR .'Message'.DIRECTORY_SEPARATOR.'saveUserSucces.php');
-        }
-        else {
-            echo ("Error to save user !!!");
-        }
+        return $ok;
     }
 
 }
